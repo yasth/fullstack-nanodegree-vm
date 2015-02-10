@@ -13,15 +13,24 @@ def connect():
 
 def deleteMatches():
     """Remove all the match records from the database."""
-
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("""DELETE FROM match;""")
+    cur.execute("""COMMIT""") #end tran
 
 def deletePlayers():
     """Remove all the player records from the database."""
-
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("""DELETE FROM player;""")
+    cur.execute("""COMMIT""") #end tran
 
 def countPlayers():
     """Returns the number of players currently registered."""
-
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("""SELECT COUNT(player.id) FROM player;""") #fetch singleton computed value
+    return cur.fetchone()[0]
 
 def registerPlayer(name):
     """Adds a player to the tournament database.
@@ -32,7 +41,10 @@ def registerPlayer(name):
     Args:
       name: the player's full name (need not be unique).
     """
-
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("""INSERT INTO player (name) VALUES (%s);""",(name,))
+    cur.execute("""COMMIT""") #end tran
 
 def playerStandings():
     """Returns a list of the players and their win records, sorted by wins.
@@ -47,7 +59,10 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
-
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("""SELECT id,name,wins,matches FROM PlayerStandings;""")
+    return cur.fetchall() #should be in the right format so just send wholesale
 
 def reportMatch(winner, loser):
     """Records the outcome of a single match between two players.
@@ -56,7 +71,10 @@ def reportMatch(winner, loser):
       winner:  the id number of the player who won
       loser:  the id number of the player who lost
     """
- 
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("""INSERT INTO match (winningPlayer,losingPlayer) VALUES (%s,%s);""",(winner,loser))
+    cur.execute("""COMMIT""") #end tran
  
 def swissPairings():
     """Returns a list of pairs of players for the next round of a match.
@@ -73,5 +91,10 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
-
-
+    ret = [] #list to be returned
+    rankings = playerStandings() #fetch sorted list of player standings (with OMV sorting)
+    if(len(rankings)%2<>0):
+       raise ValueError("Odd number of players") # Can't pair odd number of players'
+    for key in range(0,len(rankings),2): #step by two as we consume two per go
+       ret.append([rankings[key][0],rankings[key][1],rankings[key+1][0],rankings[key+1][1]])
+    return ret
