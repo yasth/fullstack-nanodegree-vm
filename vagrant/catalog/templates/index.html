@@ -12,7 +12,11 @@
             {% for cat in categories %}
                   <li><a href="{{url_for('getCategory', id=cat.id )}}" >{{cat.name}}</a></li>
             {% endfor %}
+            
         </ul>
+        {% if 'twitter_user' in session %}
+        <div><h4><a href="{{url_for("addCategory")}}">Add Category</a></h4></div>
+        {% endif %}
     </div>
     <div class="col-md-8">
         <ul>

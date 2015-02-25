@@ -1,0 +1,14 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1>Add Item</h1>
+    <form action="#" method='post'>
+
+        <label for="name">Title of Item</label> <input type="text" name="title" /><br />
+        <label for="name">Text of Item</label> <textarea rows="4" cols="40" type="text" name="body" ></textarea><br />
+        <label for="name">URL of Item </label> <input type="text" name="url" /><br />
+        <input type="submit" />
+    </form>
+</div>
+{% endblock %}

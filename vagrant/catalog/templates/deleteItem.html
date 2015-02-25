@@ -1,0 +1,10 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1>Delete {{thisItem.Title}}</h1>
+    <form action="#" method='post'>
+        <input type="submit" /> <input type="button" onclick="window.history.back();" value="Cancel" />
+    </form>
+</div>
+{% endblock %}

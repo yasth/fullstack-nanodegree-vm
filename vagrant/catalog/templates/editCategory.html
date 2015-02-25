@@ -1,0 +1,12 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1>Edit Category</h1>
+    <form action="#" method='post'>
+
+        <label for="name">Name of Category</label> <input type="text" id="name" name="name" value="{{category.name}}"/><br />
+        <input type="submit" />
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1>Add Item</h1>
+    <form action="#" method='post'>
+
+        <label for="title">Title of Item</label> <input type="text" name="title"  value="{{item.title}}"/><br />
+        <label for="body">Text of Item</label> <textarea rows="4" cols="40" type="text" name="body">{{item.body}}</textarea><br />
+        <label for="url">URL of Item </label> <input type="text" name="url" value="{{item.url}}" /><br />
+        <label for="categoryID">Category </label> 
+        <select name="categoryID">
+            {% for category in categories %}
+                {% if category.id == item.category.id %}
+                   <option value="{{category.id}}" selected="selected">{{category.name}}</option>
+                {% else %}
+                    <option value="{{category.id}}">{{category.name}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <input type="submit" />
+    </form>
+</div>
+{% endblock %}

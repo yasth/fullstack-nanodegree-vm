@@ -22,13 +22,28 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ url_for('home') }}">Login</a></li>
+                    {% if 'twitter_user' in session %}
+                    <li><a href="{{ url_for('logout') }}" ">{{session['twitter_user']}}</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </div>
 
     <div class="container body-content">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="jumbotron">
+        <ul class=flashes>
+            {% for message in messages %}
+            <li><h4>{{ message }}</h4></li>
+            {% endfor %}
+        </ul>
+        </div>
+        {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
         <hr />
         <footer>

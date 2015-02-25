@@ -1,0 +1,16 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1>Delete {{thisCategory.Title}}</h1>
+    <form action="#" method='post'>
+        <h3>Deleting this category will also delete these items:</h3>
+        <ul>
+            {% for item in thisCategory.Items %}
+                <li>#{{item.id}}-{{item.title}}</li>
+            {% endfor%}
+        </ul>
+        <input type="submit" /> <input type="button" onclick="window.history.back();" value="Cancel" />
+    </form>
+</div>
+{% endblock %}
